@@ -59,10 +59,14 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="pages-login.html">
+            <a class="nav-link collapsed" href="#"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                 <i class="bi bi-box-arrow-in-right"></i>
                 <span>Cerrar sesión</span>
             </a>
+            <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                @csrf
+            </form>
         </li>
     </ul>
 </aside>
