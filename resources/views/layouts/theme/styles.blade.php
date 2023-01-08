@@ -1,5 +1,5 @@
-<link href="{{ asset('assets/img/favicon.png') }}" rel="icon" />
-<link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
+<link href="{{ asset('assets/img/LA_ESMERALDA_logo.svg') }}" rel="icon" />
+<link href="{{ asset('assets/img/LA_ESMERALDA_logo.svg') }}" rel="apple-touch-icon" />
 <link href="https://fonts.gstatic.com" rel="preconnect" />
 <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -13,10 +13,21 @@
 <link href="{{ asset('assets/css/simple-datatables.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
 
-
+{{-- Otros --}}
+<script src="{{ asset('assets/js/loader.js') }}"></script>
+<link href="{{ asset('assets/css/loader.css') }}" rel="stylesheet" />
+<link href="{{ asset('plugins/font-icons/fontawesome/css/fontawesome.css') }}" rel="stylesheet" />
 <link href="{{ asset('plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" />
 <link href="{{ asset('plugins/notification/snackbar/snackbar.min.css') }}" rel="stylesheet" />
 
+<link href="{{ asset('assets/css/widgets/modules-widgets.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/forms/theme-checkbox-radio.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/structure.css') }}" rel="stylesheet" class="structure" />
+<link href="{{ asset('assets/css/elements/avatar.css') }}" rel="stylesheet" />
+
+
+{{-- end otros --}}
 <style>
     aside {
         /* display: none !important; */

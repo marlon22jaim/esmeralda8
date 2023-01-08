@@ -14,12 +14,19 @@
         App.init();
     });
 </script>
+
+{{-- Otros --}}
 <script src="{{ asset('plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 <script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('plugins/notification/snackbar/snackbar.min.js') }}"></script>
 <script src="{{ asset('plugins/nicescroll/nicescroll.js') }}"></script>
 <script src="{{ asset('plugins/currency/currency.js') }}"></script>
 
+
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="{{ asset('assets/js/libs/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+{{-- end Otros --}}
 
 <script>
     function noty(mensaje, option = 1) {
