@@ -7,15 +7,16 @@
                 </h4>
                 <ul class="tabs tab-pills">
                     <li>
-                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal" style="background: #3b3f5c">Agregar</a>
+                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
+                            style="background: #3b3f5c">Agregar</a>
                     </li>
                 </ul>
             </div>
-            Buscar
+            @include('common.searchbox')
 
             <div class="widget-content">
                 <div class="table-responsive">
-                    <table class="table datatable display table-hover" id="datatable">
+                    <table class="table display table-hover" id="datatable">
                         <thead>
                             <tr>
                                 <th style="color: #3b3f5c">Descripción</th>
@@ -24,7 +25,7 @@
                             </tr>
                         </thead>
 
-                        {{-- table anterior --}}
+                        {{-- table anterior sin el data table --}}
 
                         {{-- <table class="table table-bordered table-borderless">
                             <thead class="text-white" style="background: #3b3f5c">
@@ -35,7 +36,7 @@
                                 </tr>
                             </thead> --}}
 
-                        {{-- end table anterior --}}
+                        {{-- end table sin el data table anterior --}}
 
 
                         <tbody>
@@ -63,7 +64,9 @@
                             @endforeach
                         </tbody>
                     </table>
-                    Paginación
+                    {{-- Paginacion --}}
+                    {{ $categories->links() }}
+                    {{-- END Paginacion --}}
                 </div>
             </div>
 
