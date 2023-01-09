@@ -7,8 +7,7 @@
                 </h4>
                 <ul class="tabs tab-pills">
                     <li>
-                        <a href="javascript:void(0)" class="btn btn-dark" data-toggle="modal" data-target="#theModal"
-                            style="background: #3b3f5c">Agregar</a>
+                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal" style="background: #3b3f5c">Agregar</a>
                     </li>
                 </ul>
             </div>
@@ -70,7 +69,7 @@
 
         </div>
     </div>
-    Include Form
+    @include('livewire.category.form')
 </div>
 
 
