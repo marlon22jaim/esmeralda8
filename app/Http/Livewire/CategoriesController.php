@@ -17,6 +17,12 @@ class CategoriesController extends Component
     public $name, $search, $image, $selected_id, $pageTitle, $componentName;
     private $pagination = 5;
 
+    public function mount()
+    {
+        $this->pageTitle = "Listado";
+        $this->componentName = "Categorías";
+    }
+
     public function render()
     {
         $data = Category::all();
