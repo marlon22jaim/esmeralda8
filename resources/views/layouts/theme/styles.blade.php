@@ -14,7 +14,7 @@
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
 
 {{-- Otros --}}
-<script src="{{ asset('assets/js/loader.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/loader.js') }}"></script> --}}
 <link href="{{ asset('assets/css/loader.css') }}" rel="stylesheet" />
 <link href="{{ asset('plugins/font-icons/fontawesome/css/fontawesome.css') }}" rel="stylesheet" />
 <link href="{{ asset('plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" />
