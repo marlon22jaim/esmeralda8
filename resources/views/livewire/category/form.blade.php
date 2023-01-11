@@ -10,7 +10,8 @@
                     </span>
                 </span>
             </div>
-            <input type="text" wire:model-lazy="name" class="form-control" placeholder="ej: categoria nueva">
+            <input type="text" wire:model-lazy="name" class="form-control"
+                placeholder="  {{ $name != null ? $name : 'Ej: categoria nueva' }}">
         </div>
         @error('name')
             <span class="text-danger er">{{ $message }}</span>
