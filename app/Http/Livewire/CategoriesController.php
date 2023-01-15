@@ -15,7 +15,7 @@ class CategoriesController extends Component
     use WithPagination;
 
     public $name, $search, $image, $selected_id, $pageTitle, $componentName;
-    private $pagination = 5;
+    private $pagination = 10;
 
     public function mount()
     {
@@ -50,7 +50,7 @@ class CategoriesController extends Component
     public function Edit($id)
     {
         // $record = Category::find($id);
-        $record = Category::find($id, ['id','name','image']);
+        $record = Category::find($id, ['id', 'name', 'image']);
         $this->name = $record->name;
         $this->selected_id = $record->id;
         $this->image = null;
@@ -58,8 +58,41 @@ class CategoriesController extends Component
         $this->emit('show-modal', 'mostrar Modal!!!');
     }
 
+    public function Store()
+    {
+        $rules = [
+            'name' => 'required|unique:categories|min:3'
+        ];
+
+        $messages = [
+            'name.required' => 'Es requerido un nombre de categoria',
+            'name.unique' => 'Ya existe una categoría con ese nombre',
+            'name.min' => 'El nombre de categoria debe tener mínimo 3 caracteres'
+        ];
+
+        $this->validate($rules, $messages);
+
+        $category = Category::create([
+            'name' => $this->name
+        ]);
+
+        $customFileName;
+        if ($this->image) {
+            $customFileName = uniqid() . '_.' . $this->image->extension();
+            $this->image->storeAs('public/categories', $customFileName);
+            $category->image = $customFileName;
+            $category->save();
+        }
+
+        $this->resetUI();
+        $this->emit('category-added', 'Categoria registrada');
+    }
+
     public function resetUI()
     {
-
+        $this->name = '';
+        $this->image = null;
+        $this->search = '';
+        $this->selected_id = 0;
     }
 }
