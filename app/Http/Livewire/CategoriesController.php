@@ -65,7 +65,7 @@ class CategoriesController extends Component
         ];
 
         $messages = [
-            'name.required' => 'Es requerido un nombre de categoria',
+            'name.required' => 'Es requerido un nombre para la categoria',
             'name.unique' => 'Ya existe una categoría con ese nombre',
             'name.min' => 'El nombre de categoria debe tener mínimo 3 caracteres'
         ];
@@ -87,6 +87,51 @@ class CategoriesController extends Component
         $this->resetUI();
         $this->emit('category-added', 'Categoria registrada');
     }
+
+    public function Update()
+    {
+        $rules = [
+            'name' => "required|min:3|unique:categories,name,{$this->selected_id}"
+        ];
+
+        $messages = [
+            'name.required' => 'Es requerido un nombre para la categoria',
+            'name.min' => 'El nombre de categoria debe tener mínimo 3 caracteres',
+            'name.unique' => 'Ya existe una categoría con ese nombre'
+        ];
+
+        $this->validate($rules, $messages);
+
+        $category = Category::find($this->selected_id);
+
+        $category->update([
+            'name' => $this->name
+        ]);
+
+        if ($this->image) {
+            $customFileName = uniqid() . '_.' . $this->image->extension();
+            $this->image->storeAs('public/categories', $customFileName);
+            $imageName = $category->image;
+
+            $category->image = $customFileName;
+            $category->save();
+
+            if ($imageName != null) {
+                if (file_exists('storage/categories' . $imageName)) {
+                    unlink('storage/categories' . $imageName);
+                }
+            }
+        }
+        $this->resetUI();
+        $this->emit('category-updated', 'Categoría Actualizada');
+    }
+
+
+
+
+
+
+
 
     public function resetUI()
     {
