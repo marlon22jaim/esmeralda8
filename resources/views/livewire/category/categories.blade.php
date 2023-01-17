@@ -55,10 +55,17 @@
                                             class="btn btn-dark mtmobile" title="Edit">
                                             <i class="ri ri-edit-box-line"></i>
                                         </a>
-                                        <a href="javascript:void(0)" onclick="Confirm('{{ $category->id }}')"
+                                        {{-- Cantidad de productos que tiene cada categoria
+                                        El software no dejará eliminar categorías que tengan productos asociados --}}
+
+                                        {{-- @if ($category->products->count() < 1) --}}
+                                        <a href="javascript:void(0)"
+                                            onclick="Confirm('{{ $category->id }}',
+                                        '{{ $category->products->count() }}')"
                                             class="btn btn-dark" title="Delete">
                                             <i class="bi bi-trash"></i>
                                         </a>
+                                        {{-- @endif --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -103,7 +110,12 @@
 
     })
 
-    function Confirm(id) {
+    function Confirm(id, products) {
+        if (products > 0) {
+            swal('No se puede eliminar esta categoría porque tiene productos asociados a esta, cantidad de productos: ',
+                products)
+            return;
+        }
         swal({
             title: 'CONFIRMAR',
             text: '¿Confirmas eliminar registro?',
