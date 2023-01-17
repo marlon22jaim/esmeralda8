@@ -128,8 +128,24 @@ class CategoriesController extends Component
 
 
 
+    protected $listeners = [
+        'deleteRow' => 'Destroy'
+    ];
 
+    public function Destroy(Category $category)
+    {
+        // $category = Category::find($id);
+        // dd($category);
+        $imageName = $category->image; // imagen temporal para proceder a eliminarla
+        $category->delete();
 
+        if ($imageName != null) {
+            unlink('storage/categories/' . $imageName);
+        }
+
+        $this->resetUI();
+        $this->emit('category-deleted', 'Categoría Eliminada');
+    }
 
 
 
