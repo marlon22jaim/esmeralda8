@@ -16,7 +16,7 @@
 
             <div class="widget-content">
                 <div class="table-responsive">
-                    <table class="table datatable display table-hover" id="datatable">
+                    <table class="table display table-hover" id="datatable">
                         <thead>
                             <tr>
                                 <th style="color: #3b3f5c">Descripción</th>
@@ -32,28 +32,28 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($products as $product)
+                            @foreach ($data as $product)
                                 <tr>
                                     <td>
-                                        <h6>{{ $product->name }}</h6>
+                                        <h6 class="text-left">{{ $product->name }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->barcode }}</h6>
+                                        <h6 class="text-center">{{ $product->barcode }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->category }}</h6>
+                                        <h6 class="text-center">{{ $product->category }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->price }}</h6>
+                                        <h6 class="text-center">{{ $product->price }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->cost }}</h6>
+                                        <h6 class="text-center">{{ $product->cost }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->stock }}</h6>
+                                        <h6 class="text-center">{{ $product->stock }}</h6>
                                     </td>
                                     <td>
-                                        <h6>{{ $product->alerts }}</h6>
+                                        <h6 class="text-center">{{ $product->alerts }}</h6>
                                     </td>
                                     <td class="text-center">
                                         <span><img src="{{ asset('storage/products/' . $product->imagen) }}"
@@ -74,7 +74,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $products->links() }}
+                    {{ $data->links() }}
                 </div>
             </div>
 

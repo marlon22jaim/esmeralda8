@@ -68,9 +68,9 @@
     <div class="col-sm-12 col-md-4">
         <div class="form-group">
             <label>Categoría</label>
-            <select class="form-control">
+            <select class="form-select">
                 <option value="Elegir" disabled>Elegir</option>
-                @foreach ($categories as $caregory)
+                @foreach ($categories as $category)
                     <option value="{{ $category->id }}" disabled>{{ $category->name }}</option>
                 @endforeach
             </select>
@@ -78,10 +78,10 @@
     </div>
 
     <div class="col-sm-12 col-md-8">
-        <div class="form-group custom-file">
+        <div class=" custom-file input-group">
             <input type="file" class="custom-file-input form-control" wire:model="image"
                 accept="image/x-png, image/x-gif, image/x-jpg,image/x-jpeg">
-            <label class="custom-file-label">Imagen {{ $image }}</label>
+            <label class="input-group-text input-gp">Imagen {{ $image }}</label>
             @error('image')
                 <span class="text-danger er">{{ $message }}</span>
             @enderror
