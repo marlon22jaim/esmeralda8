@@ -1,17 +1,18 @@
 @include('common.modalHead')
 
 
+
+
+
 <div class="row">
     <div class="col-sm-12">
         <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">
-                    <span class="ri ri-edit-box-line">
-                    </span>
-                </span>
-            </div>
+
             <input type="text" wire:model="name" class="form-control"
                 placeholder="  {{ $name != null ? $name : 'Ej: categoria nueva' }}" />
+            <span class="input-group-text input-gp">
+                <i class="ri ri-edit-box-line"></i>
+            </span>
         </div>
         @error('name')
             <span class="text-danger er">{{ $message }}</span>
