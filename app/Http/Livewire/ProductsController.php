@@ -170,5 +170,32 @@ class ProductsController extends Component
 
     public function resetUI()
     {
+        $this->name = '';
+        $this->barcode = '';
+        $this->cost = '';
+        $this->price = '';
+        $this->alerts = '';
+        $this->stock = '';
+        $this->categoryid = 'Elegir';
+        $this->image = null;
+        $this->selected_id = 0;
+        $this->search = '';
+        $this->emit('hide-modal');
+    }
+
+    protected $listeners = ['deleteRow' => 'Destroy'];
+    public function Destroy(Product $product)
+    {
+        $imageTemp = $product->image;
+        $product->delete();
+
+        if ($imageTemp != null) {
+            if (file_exists('storage/products/' . $imageTemp)) {
+                unlink('storage/products/' . $imageTemp);
+            }
+        }
+
+        $this->resetUI();
+        $this->emit('product-deleted', 'Producto Eliminado');
     }
 }
