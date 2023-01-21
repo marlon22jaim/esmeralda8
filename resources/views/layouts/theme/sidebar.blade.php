@@ -1,7 +1,7 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link {{ request()->is('dashboard') ? '' : 'collapsed' }}" href="#">
                 <i class="bi bi-grid"></i> <span>Dashboard</span>
             </a>
         </li>
@@ -9,12 +9,12 @@
 
         <li class="nav-heading">Páginas</li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link  {{ request()->is('categories') ? '' : 'collapsed' }} " href="{{ route('categorias') }}">
                 <i class="bi bi-bar-chart-steps"></i> <span>Categorias</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link {{ request()->is('products') ? '' : 'collapsed' }}" href="{{ route('productos') }}">
                 <i class="bi bi-bag-dash"></i> <span>Productos</span>
             </a>
         </li>
