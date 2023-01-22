@@ -26,6 +26,8 @@
 <link href="{{ asset('assets/css/structure.css') }}" rel="stylesheet" class="structure" />
 <link href="{{ asset('assets/css/elements/avatar.css') }}" rel="stylesheet" />
 
+<link href="{{ asset('assets/css/apps/scrumboard.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/css/apps/notes.css') }}" rel="stylesheet" />
 
 {{-- end otros --}}
 <style>

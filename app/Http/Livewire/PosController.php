@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class PosController extends Component
 {
+    public $total = 10, $cart = [], $itemsQuantity = 2;
     public function render()
     {
         session(['title' => 'Ventas']);

@@ -5,7 +5,7 @@
 
                 @if ($total > 0)
                     <div class="table-responsive tblscroll" style="max-height: 650px;overflow: hidden">
-                        <table class="table table-bordered table-striped  mt-1">
+                        <table class="table display table-hover mt-1">
                             <thead class="text-white" style="background: #3b3f5c">
                                 <tr>
                                     <th width="10%"></th>
@@ -62,7 +62,7 @@
                         </table>
                     </div>
                 @else
-                    <h5 class="text-center text-muted">Agrega productos a la venta</h5>
+                    <h5 class="text-center text-muted" style="margin-top: 25px">Agrega productos a la venta</h5>
                 @endif
                 <div wire:loading.inline wire:target="saveSale">
                     <h4 class="text-danger text-center">Guardando venta...</h4>
