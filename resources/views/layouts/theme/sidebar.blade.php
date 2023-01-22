@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link {{ request()->is('pos') ? '' : 'collapsed' }}" href="{{ route('ventas') }}">
                 <i class="bi bi-cart3"></i> <span>Ventas</span>
             </a>
         </li>

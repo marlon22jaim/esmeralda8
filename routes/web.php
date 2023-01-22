@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\CategoriesController;
 use App\Http\Livewire\CoinsController;
+use App\Http\Livewire\PosController;
 use App\Http\Livewire\ProductsController;
 
 /*
@@ -27,3 +28,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('categories', CategoriesController::class)->name('categorias');
 Route::get('products', ProductsController::class)->name('productos');
 Route::get('coins', CoinsController::class)->name('coins');
+Route::get('pos', PosController::class)->name('ventas');
