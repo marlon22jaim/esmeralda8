@@ -38,7 +38,7 @@
                                         <h6>${{ number_format($coin->value, 2) }}</h6>
                                     </td>
                                     <td class="text-center">
-                                        <span><img src="{{ asset('storage/coins/' . $coin->imagen) }}"
+                                        <span><img src="{{ asset('storage/denominations/' . $coin->imagen) }}"
                                                 alt="imagen de ejemplo" height="70" width="80"
                                                 class="rounded"></span>
                                     </td>
