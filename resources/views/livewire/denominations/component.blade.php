@@ -19,7 +19,8 @@
                     <table class="table display table-hover" id="datatable">
                         <thead>
                             <tr>
-                                <th style="color: #3b3f5c">Descripción</th>
+                                <th style="color: #3b3f5c">Tipo</th>
+                                <th class="text-center" style="color: #3b3f5c">Valor</th>
                                 <th class="text-center" style="color: #3b3f5c">Imagen</th>
                                 <th class="text-center" style="color: #3b3f5c">Acción</th>
                             </tr>
@@ -40,47 +41,42 @@
 
 
                         <tbody>
-                            @foreach ($categories as $category)
+                            @foreach ($data as $coin)
                                 <tr>
                                     <td>
-                                        <h6>{{ $category->name }}</h6>
+                                        <h6>{{ $coin->type }}</h6>
+                                        <h6>${{ number_format($coin->value, 2) }}</h6>
                                     </td>
                                     <td class="text-center">
-                                        <span><img src="{{ asset('storage/categories/' . $category->imagen) }}"
+                                        <span><img src="{{ asset('storage/coins/' . $coin->imagen) }}"
                                                 alt="imagen de ejemplo" height="70" width="80"
                                                 class="rounded"></span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" wire:click="Edit({{ $category->id }})"
+                                        <a href="javascript:void(0)" wire:click="Edit({{ $coin->id }})"
                                             class="btn btn-dark mtmobile" title="Edit">
                                             <i class="ri ri-edit-box-line"></i>
                                         </a>
-                                        {{-- Cantidad de productos que tiene cada categoria
-                                        El software no dejará eliminar categorías que tengan productos asociados --}}
 
-                                        {{-- @if ($category->products->count() < 1) --}}
-                                        <a href="javascript:void(0)"
-                                            onclick="Confirm('{{ $category->id }}',
-                                        '{{ $category->products->count() }}')"
+                                        <a href="javascript:void(0)" onclick="Confirm('{{ $coin->id }}')"
                                             class="btn btn-dark" title="Delete">
                                             <i class="bi bi-trash"></i>
                                         </a>
-                                        {{-- @endif --}}
-                                        {{-- {{ $category->imagen }} --}}
+
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                     {{-- Paginacion --}}
-                    {{ $categories->links() }}
+                    {{ $data->links() }}
                     {{-- END Paginacion --}}
                 </div>
             </div>
 
         </div>
     </div>
-    @include('livewire.category.form')
+    @include('livewire.denominations.form')
 </div>
 
 
@@ -88,15 +84,15 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-        window.livewire.on('category-added', msg => {
+        window.livewire.on('item-added', msg => {
             $('#theModal').modal('hide');
             noty(msg)
         })
-        window.livewire.on('category-updated', msg => {
+        window.livewire.on('item-updated', msg => {
             $('#theModal').modal('hide');
             noty(msg)
         })
-        window.livewire.on('category-deleted', msg => {
+        window.livewire.on('item-deleted', msg => {
             noty(msg)
         })
         window.livewire.on('hide-modal', msg => {
@@ -105,21 +101,13 @@
         window.livewire.on('show-modal', msg => {
             $('#theModal').modal('show');
         })
-        window.livewire.on('hidden.bs.modal', msg => {
-            $('.er').css('display', 'none');
-        })
         $('#theModal').on('hidden.bs.modal', function(e) {
             $('.er').css('display', 'none');
         })
 
     })
 
-    function Confirm(id, products) {
-        if (products > 0) {
-            swal('No se puede eliminar esta categoría porque tiene productos asociados a esta, cantidad de productos: ',
-                products)
-            return;
-        }
+    function Confirm(id) {
         swal({
             title: 'CONFIRMAR',
             text: '¿Confirmas eliminar registro?',

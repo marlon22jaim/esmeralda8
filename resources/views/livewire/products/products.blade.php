@@ -105,6 +105,9 @@
         window.livewire.on('show-modal', msg => {
             $('#theModal').modal('show');
         })
+        window.livewire.on('hidden.bs.modal', msg => {
+            $('.er').css('display', 'none');
+        })
         $('#theModal').on('hidden.bs.modal', function(e) {
             $('.er').css('display', 'none');
         })
