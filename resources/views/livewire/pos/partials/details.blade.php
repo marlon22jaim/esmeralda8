@@ -4,8 +4,9 @@
             <div class="card-body">
 
                 @if ($total > 0)
-                    <div class="table-responsive tblscroll" style="max-height: 650px;overflow: hidden">
-                        <table class="table display table-hover mt-1">
+                    {{-- <div class="table-responsive tblscroll" style="max-height: 650px;overflow: hidden"> --}}
+                    <div class="table-responsive tblscroll" style="max-height: 650px">
+                        <table class="table display table-hover mt-1" id="datatable">
                             <thead class="text-white" style="background: #3b3f5c">
                                 <tr>
                                     <th width="10%"></th>
