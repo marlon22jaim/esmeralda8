@@ -45,6 +45,7 @@ class ProductsController extends Component
                 ->orderBy('products.name', 'asc')
                 ->paginate($this->pagination);
         }
+        session(['title' => 'Productos']);
         return view('livewire.products.products', [
             'data' => $products,
             'categories' => Category::orderBy('name', 'asc')->get()

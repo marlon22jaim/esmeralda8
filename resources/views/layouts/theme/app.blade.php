@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>la Esmeralda -</title>
+        <title>@if(session()->has('title'))La Esmeralda - {{session('title')}}@else La Esmeralda @endif</title>
+
         <meta name="robots" content="noindex, nofollow" />
         <meta content="" name="description" />
         <meta content="" name="keywords" />

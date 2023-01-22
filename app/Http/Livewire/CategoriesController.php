@@ -42,6 +42,7 @@ class CategoriesController extends Component
 
         // end busqueda backend
 
+        session(['title' => 'Categorías']);
         return view('livewire.category.categories', ['categories' => $data])
             ->extends('layouts.theme.app')
             ->section('content');
