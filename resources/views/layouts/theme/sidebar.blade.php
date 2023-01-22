@@ -44,7 +44,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link {{ request()->is('coins') ? '' : 'collapsed' }}" href="{{ route('coins') }}">
                 <i class="bi bi-coin"></i> <span>Monedas</span>
             </a>
         </li>

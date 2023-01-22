@@ -26,25 +26,15 @@
                             </tr>
                         </thead>
 
-                        {{-- table anterior sin el data table --}}
-
-                        {{-- <table class="table table-bordered table-borderless">
-                            <thead class="text-white" style="background: #3b3f5c">
-                                <tr>
-                                    <th class="table-th text-white">Descripción</th>
-                                    <th class="table-th text-white">Imagen</th>
-                                    <th class="table-th text-white">Acción</th>
-                                </tr>
-                            </thead> --}}
-
-                        {{-- end table sin el data table anterior --}}
-
 
                         <tbody>
                             @foreach ($data as $coin)
                                 <tr>
                                     <td>
                                         <h6>{{ $coin->type }}</h6>
+
+                                    </td>
+                                    <td  class="text-center">
                                         <h6>${{ number_format($coin->value, 2) }}</h6>
                                     </td>
                                     <td class="text-center">

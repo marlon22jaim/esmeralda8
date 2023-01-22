@@ -7,9 +7,10 @@ use Livewire\Component;
 
 class CoinsController extends Component
 {
-    public $componentName  = 'Denominaciones', $pageTitle = 'Listado';
+    public $componentName, $pageTitle, $selected_id, $image, $search;
     public function render()
     {
+        session(['title' => 'Monedas']);
         return view(
             'livewire.denominations.component',
             [
@@ -18,5 +19,11 @@ class CoinsController extends Component
             ]
         )
             ->extends('layouts.theme.app')->section('content');
+    }
+    public function mount()
+    {
+        $this->componentName  = 'Denominaciones';
+        $this->pageTitle = 'Listado';
+        $this->selected_id = 0;
     }
 }
