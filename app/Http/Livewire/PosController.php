@@ -4,8 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\Denomination;
 use App\Models\Product;
+use App\Models\Sale;
+use App\Models\SaleDetails;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Livewire\Component;
+use DB;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class PosController extends Component
 {
@@ -148,5 +154,75 @@ class PosController extends Component
         $this->emit('scan-ok', 'Cantidad Actualizada');
     }
 
-    
+    public function clearCart()
+    {
+        Cart::clear();
+        $this->efectivo = 0;
+        $this->change = 0;
+
+        $this->total = Cart::getTotal();
+        $this->itemsQuantity = Cart::getTotalQuantity();
+        $this->emit('scan-ok', 'Carrito vacío');
+    }
+
+    public function saveSale()
+    {
+        if ($this->total <= 0) {
+            $this->emit('sale-error', 'Agrega productos a la venta');
+            return;
+        }
+        if ($this->efectivo <= 0) {
+            $this->emit('sale-error', 'Ingresa el efectivo');
+            return;
+        }
+        if ($this->total > $this->efectivo) {
+            $this->emit('sale-error', 'El efectivo debe ser mayor o igual al total');
+            return;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $sale = Sale::create([
+                'total' => $this->total,
+                'items' => $this->itemsQuantity,
+                'cash' => $this->efectivo,
+                'change' => $this->change,
+                'user_id' => Auth()->user()->id
+
+            ]);
+
+            if ($sale) {
+                $items = Cart::getContent();
+                foreach ($items as $item) {
+                    SaleDetails::create([
+                        'price' => $item->price,
+                        'quantity' => $item->quantity,
+                        'product_id' => $item->id,
+                        'sale_id' => $sale->id,
+                    ]);
+
+                    $product = Product::find($item->id);
+                    $product->stock = $product->stock - $item->quantity;
+                    $product->save();
+                }
+            }
+
+            DB::commit();
+            Cart::clear();
+            $this->efectivo = 0;
+            $this->change = 0;
+            $this->total = Cart::getTotal();
+            $this->itemsQuantity = Cart::getTotalQuantity();
+            $this->emit('sale-ok', 'Venta Registrada con Éxito');
+            $this->emit('print-ticket', $sale->id);
+        } catch (Exception $e) {
+            DB::rollback();
+            $this->emit('sale-error', $e->getMessage());
+        }
+    }
+    public function printTicket($sale)
+    {
+        return Redirect::to("print://$sale->id");
+    }
 }
