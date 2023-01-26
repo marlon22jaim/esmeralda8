@@ -125,4 +125,28 @@ class PosController extends Component
             $this->emit('scan-ok', $title);
         }
     }
+
+    public function removeItem($productId)
+    {
+        Cart::remove($productId);
+        $this->total = Cart::getTotal();
+        $this->itemsQuantity = Cart::getTotalQuantity();
+        $this->emit('scan-ok', 'Producto eliminado del carrito');
+    }
+
+    public function decreaseQty($productId)
+    {
+        $item = Cart::get($productId);
+        Cart::remove($productId);
+
+        $newQty = ($item->quantity) - 1;
+        if ($newQty > 0)
+            Cart::add($item->id, $item->name, $item->price, $newQty, $item->attributes[0]);
+
+        $this->total = Cart::getTotal();
+        $this->itemsQuantity = Cart::getTotalQuantity();
+        $this->emit('scan-ok', 'Cantidad Actualizada');
+    }
+
+    
 }
