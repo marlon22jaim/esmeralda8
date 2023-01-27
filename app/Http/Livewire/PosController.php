@@ -51,6 +51,7 @@ class PosController extends Component
 
     public function ScanCode($barcode, $cant = 1)
     {
+        dd($barcode);
         $product = Product::where('barcode', $barcode)->first();
         if ($product == null || empty($empty)) {
             $this->emit('scan-notfound', 'El producto no está registrado');
