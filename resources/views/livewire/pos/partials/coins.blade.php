@@ -23,7 +23,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text input-gp hideonsm"
                                     style="background: #3b3f5c;color:white">
-                                    Efectivo
+                                    Efectivo F8
                                 </span>
                             </div>
                             <input style="margin: 5px 5px; height: 35px;border-radius: 2%" type="number"

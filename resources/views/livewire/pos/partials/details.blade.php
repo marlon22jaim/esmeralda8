@@ -5,14 +5,14 @@
 
                 @if ($total > 0)
                     {{-- <div class="table-responsive tblscroll" style="max-height: 650px;overflow: hidden"> --}}
-                    <div class="table-responsive tblscroll" style="max-height: 650px">
+                    <div class="table-responsive" style="max-height: 650px;overflow: hidden">
                         <table class="table display table-hover mt-1" id="datatable">
                             <thead class="text-white" style="background: #3b3f5c">
                                 <tr>
                                     <th width="10%"></th>
                                     <th class="table-th text-left text-white">Descripción</th>
                                     <th class="table-th text-center text-white">Precio</th>
-                                    <th width="13%" class="table-th text-center text-white">Cant</th>
+                                    <th width="15%" class="table-th text-center text-white">Cant</th>
                                     <th class="table-th text-center text-white">Importe</th>
                                     <th class="table-th text-center text-white">Acciones</th>
                                 </tr>
@@ -49,11 +49,11 @@
                                             </button>
                                             <button wire:click.prevent="decreaseQty({{ $item->id }})"
                                                 class="btn btn-dark mbmobile">
-                                                <i class="bi bi-file-minus-fill"></i>
+                                                <i class="bi bi-file-minus"></i>
                                             </button>
                                             <button wire:click.prevent="increaseQty({{ $item->id }})"
                                                 class="btn btn-dark mbmobile">
-                                                <i class="bi bi-file-minus-fill"></i>
+                                                <i class="bi bi-plus"></i>
                                             </button>
 
                                         </td>

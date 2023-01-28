@@ -45,7 +45,7 @@ class PosController extends Component
     protected $listeners = [
         'scan-code' => 'ScanCode',
         'removeItem' => 'removeItem',
-        'crearCart' => 'clearCart',
+        'clearCart' => 'clearCart',
         'saveSale' => 'saveSale',
     ];
 
