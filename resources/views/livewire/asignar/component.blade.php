@@ -30,7 +30,7 @@
                 <div class="row mt-3">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table datatable display table-hover" id="datatable">
+                            <table class="table display table-hover" id="datatable">
                                 <thead>
                                     <tr>
                                         <th style="color: #3b3f5c">ID</th>
@@ -45,21 +45,18 @@
                                                 <h6 class="text-center">{{ $permiso->id }}</h6>
                                             </td>
                                             <td class="text-center">
-
-                                                <div class="n-check">
-                                                    <label for=""
-                                                        class="new-control new-checkbox checkbox-primary">
+                                                <div class="d-flex justify-content-center">
+                                                    <label>
                                                         <input type="checkbox"
                                                             wire:change="SyncPermiso($('#p' +{{ $permiso->id }}).is(':checked'),'{{ $permiso->name }}')"
                                                             id="p{{ $permiso->id }}" value="{{ $permiso->id }}"
-                                                            class="new-control-input"
+                                                            class=""
                                                             {{ $permiso->checked == 1 ? 'checked' : '' }}>
-                                                        <span class="new-control-indicator">
-                                                            <h6>{{ $permiso->name }}</h6>
-                                                        </span>
+                                                        <h6 class="ml-3">{{ $permiso->name }}</h6>
                                                     </label>
                                                 </div>
                                             </td>
+
                                             <td class="text-center">
                                                 <h6>{{ \App\Models\User::permission($permiso->name)->count() }}</h6>
                                             </td>
@@ -67,7 +64,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $permisos->link() }}
+                            {{ $permisos->links() }}
                         </div>
                     </div>
 
@@ -101,7 +98,7 @@
 
 
 
-    function Revocar(id) {
+    function Revocar() {
         swal({
             title: 'CONFIRMAR',
             text: '¿Confirmas revocar todos los permisos?',
@@ -113,7 +110,7 @@
             confirmButtonColor: '#3b3f5c'
         }).then(function(result) {
             if (result.value) {
-                window.livewire.emit('revokeall')
+                window.livewire.emit('RemoveAll')
                 swal.close()
             }
         })

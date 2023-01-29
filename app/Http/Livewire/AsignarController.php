@@ -20,7 +20,7 @@ class AsignarController extends Component
         return 'vendor.livewire.bootstrap';
     }
 
-    public function mout()
+    public function mount()
     {
         $this->role = 'Elegir';
         $this->componentName = 'Asignar Permisos';
@@ -55,7 +55,7 @@ class AsignarController extends Component
         ])->extends('layouts.theme.app')->section('content');
     }
 
-    public $listeners = ['revokeall', 'RemoveAll'];
+    public $listeners = ['RemoveAll', 'RemoveAll'];
     public function RemoveAll()
     {
         if ($this->role == 'Elegir') {
@@ -90,6 +90,8 @@ class AsignarController extends Component
                 $roleName->revokePermissionTo($permisoName);
                 $this->emit('permi', "Permiso eliminado correctamente");
             }
+        } else {
+            $this->emit('permi', "Elige un rol válido");
         }
     }
 }
