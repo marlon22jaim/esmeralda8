@@ -20,7 +20,7 @@
                                 <i class="ri ri-edit-box-line"></i>
                             </span>
                         </div>
-                        @error('roleName')
+                        @error('permissionName')
                             <span class="text-danger er">{{ $message }}</span>
                         @enderror
                     </div>

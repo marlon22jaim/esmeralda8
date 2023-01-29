@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\CategoriesController;
 use App\Http\Livewire\CoinsController;
+use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\PosController;
 use App\Http\Livewire\ProductsController;
 use App\Http\Livewire\RolesController;
+use Spatie\Permission\Contracts\Permission;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +33,4 @@ Route::get('products', ProductsController::class)->name('productos');
 Route::get('coins', CoinsController::class)->name('coins');
 Route::get('pos', PosController::class)->name('ventas');
 Route::get('roles', RolesController::class)->name('roles');
+Route::get('permissions', PermisosController::class)->name('permisos');

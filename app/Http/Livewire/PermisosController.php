@@ -88,7 +88,7 @@ class PermisosController extends Component
     public function Destroy($id)
     {
         // dd($id);
-        $rolesCount = Permission::find($id)->getRolesNames->count();
+        $rolesCount = Permission::find($id)->getRoleNames()->count();
         if ($rolesCount > 0) {
             $this->emit('permiso-error', 'No se puede eliminar el Permiso porque tiene Roles asignados');
             return;
