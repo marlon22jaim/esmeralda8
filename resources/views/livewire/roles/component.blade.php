@@ -103,7 +103,7 @@
             confirmButtonColor: '#3b3f5c'
         }).then(function(result) {
             if (result.value) {
-                window.livewire.emit('deleteRow', id)
+                window.livewire.emit('destroy', id)
                 swal.close()
             }
         })

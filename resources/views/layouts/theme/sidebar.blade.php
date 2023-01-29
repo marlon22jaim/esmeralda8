@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link  {{ request()->is('roles') ? '' : 'collapsed' }} " href="{{ route('roles') }}">
                 <i class="bi bi-key"></i> <span>Roles</span>
             </a>
         </li>
