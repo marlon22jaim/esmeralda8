@@ -16,7 +16,8 @@
 
             <div class="widget-content">
                 <div class="table-responsive">
-                    <table class="table datatable display table-hover" id="datatable">
+                    <table class="table display table-hover" id="datatable">
+                        {{-- <table class="table datatable display table-hover" id="datatable"> --}}
                         <thead>
                             <tr>
                                 <th style="color: #3b3f5c">ID</th>
