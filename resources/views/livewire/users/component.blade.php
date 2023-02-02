@@ -44,7 +44,7 @@
 
                                     <td class="text-center">
                                         <span
-                                            class="badge {{ $r->status == 'Active' ? 'badge-success' : 'badge-danger' }} text-uppercase">{{ $r->profile }}</span>
+                                            class="badge {{ $r->status == 'ACTIVE' ? 'badge-success' : 'badge-danger' }} text-uppercase">{{ $r->profile }}</span>
                                     </td>
                                     <td class="text-center">
                                         @if ($r->image != null)
