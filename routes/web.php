@@ -8,6 +8,7 @@ use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\PosController;
 use App\Http\Livewire\ProductsController;
 use App\Http\Livewire\RolesController;
+use App\Http\Livewire\UsersController;
 use Spatie\Permission\Contracts\Permission;
 
 /*
@@ -36,3 +37,4 @@ Route::get('pos', PosController::class)->name('ventas');
 Route::get('roles', RolesController::class)->name('roles');
 Route::get('permissions', PermisosController::class)->name('permisos');
 Route::get('asignar', AsignarController::class)->name('asignar');
+Route::get('users', UsersController::class)->name('usuarios');
