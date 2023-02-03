@@ -103,5 +103,6 @@ class PermisosController extends Component
         $this->selected_id = 0;
         $this->emit('hide-modal');
         $this->resetValidation();
+        $this->resetPage();
     }
 }

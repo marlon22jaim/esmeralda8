@@ -16,7 +16,7 @@
 
             <div class="widget-content">
                 <div class="table-responsive">
-                    <table class="table datatable display table-hover" id="datatable">
+                    <table class="table display table-hover" id="datatable">
                         <thead>
                             <tr>
                                 <th style="color: #3b3f5c">Usuario</th>
@@ -41,15 +41,22 @@
                                     <td class="text-center">
                                         <h6>{{ $r->email }}</h6>
                                     </td>
+                                    <td class="text-center">
+                                        <h6>{{ $r->profile }}</h6>
+                                    </td>
 
                                     <td class="text-center">
                                         <span
-                                            class="badge {{ $r->status == 'ACTIVE' ? 'badge-success' : 'badge-danger' }} text-uppercase">{{ $r->profile }}</span>
+                                            class="badge {{ $r->status == 'Active' ? 'badge-success' : 'badge-danger' }} text-uppercase">{{ $r->status }}</span>
                                     </td>
                                     <td class="text-center">
                                         @if ($r->image != null)
                                             <img src="{{ asset('storage/users/' . $r->image) }}" alt="imagen"
-                                                class="card-img-top img-fluid">
+                                                class="card-img-top img-fluid" style="height: 120px; width: 100px">
+                                        @endif
+                                        @if ($r->image == null or ($r->image = ''))
+                                            <img src="{{ asset('storage/users/noimg.jpg') }}" alt="imagen"
+                                                class="card-img-top img-fluid" style="height: 60px; width: 70px">
                                         @endif
                                     </td>
                                     <td class="text-center">

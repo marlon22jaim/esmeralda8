@@ -46,9 +46,17 @@
                                         <h6>{{ $category->name }}</h6>
                                     </td>
                                     <td class="text-center">
-                                        <span><img src="{{ asset('storage/categories/' . $category->imagen) }}"
-                                                alt="imagen de ejemplo" height="70" width="80"
-                                                class="rounded"></span>
+                                        @if ($category->image != null)
+                                            <span><img src="{{ asset('storage/categories/' . $category->imagen) }}"
+                                                    alt="imagen de ejemplo" height="70" width="80"
+                                                    class="rounded"></span>
+                                        @endif
+
+                                        @if ($category->image == null or ($category->image = ''))
+                                            <span><img src="{{ asset('storage/categories/noimg.jpg') }}"
+                                                    alt="imagen de ejemplo" height="70" width="80"
+                                                    class="rounded"></span>
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                         <a href="javascript:void(0)" wire:click="Edit({{ $category->id }})"

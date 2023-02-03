@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             "phone" => "3000000000",
             "email" => "andres_jr19@hotmail.com",
             "profile" => "ADMIN",
-            "status" => "ACTIVE",
+            "status" => "Active",
             "password" => bcrypt("123"),
         ]);
         User::create([
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             "phone" => "3200000000",
             "email" => "guillermo@correo.com",
             "profile" => "ADMIN",
-            "status" => "ACTIVE",
+            "status" => "Active",
             "password" => bcrypt("123"),
         ]);
         User::create([
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
             "phone" => "3150000000",
             "email" => "carlos@correo.com",
             "profile" => "EMPLOYEE",
-            "status" => "ACTIVE",
+            "status" => "Active",
             "password" => bcrypt("123"),
         ]);
         User::create([
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             "phone" => "3050000000",
             "email" => "marbel@correo.com",
             "profile" => "EMPLOYEE",
-            "status" => "ACTIVE",
+            "status" => "Active",
             "password" => bcrypt("123"),
         ]);
     }

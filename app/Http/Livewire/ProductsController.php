@@ -183,6 +183,7 @@ class ProductsController extends Component
         $this->search = '';
         $this->emit('hide-modal');
         $this->resetValidation();
+        $this->resetPage();
     }
 
     protected $listeners = ['deleteRow' => 'Destroy'];

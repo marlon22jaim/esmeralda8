@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Sale;
 use Spatie\Permission\Models\Role;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -13,7 +14,7 @@ class UsersController extends Component
     use WithPagination;
     use WithFileUploads;
 
-    public $name, $phone, $email, $status, $image, $password, $selected_id, $fileLoaded, $role;
+    public $name, $phone, $email, $status, $image, $password, $selected_id, $fileLoaded, $profile;
     public $pageTitle, $componentName, $search;
     private $pagination = 3;
 
@@ -58,6 +59,7 @@ class UsersController extends Component
         $this->selected_id = 0;
         $this->emit('hide-modal');
         $this->resetValidation();
+        $this->resetPage();
     }
 
     public function edit(User $user)
@@ -71,5 +73,117 @@ class UsersController extends Component
         $this->password = '';
 
         $this->emit('show-modal', 'Abierto!');
+    }
+    protected $listeners = [
+        'deleteRow' => 'destroy',
+        'resetUI' => 'resetUI',
+    ];
+
+    public function Store()
+    {
+        $rules = [
+            'name' => 'required|min:3',
+            'email' => 'required|unique:users|email',
+            'status' => 'required|not_in:Elegir',
+            'profile' => 'required|not_in:Elegir',
+            'password' => 'required|min:3',
+        ];
+        $messages = [
+            'name.required' => 'Ingresa el nombre',
+            'name.min' => 'El nombre debe tener minimo 3 caracteres',
+            'email.required' => 'Ingresa un correo',
+            'email.email' => 'Ingresa un correo válido',
+            'email.unique' => 'Ya existe este correo en el sistema',
+            'status.required' => 'Seleccione un estado para el usuario',
+            'status.not_in' => 'Seleccione un estado diferente a Elegir',
+            'profile.required' => 'Selecciona el perfil/rol del usuario',
+            'profile.not_in' => 'Selecciona un perfil diferente a Elegir',
+            'password.required' => 'Ingresa una contraseña',
+            'password.min' => 'la contraseña debe tener al menos 3 caracteres',
+        ];
+
+        $this->validate($rules, $messages);
+
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'status' => $this->status,
+            'profile' => $this->profile,
+            'password' => bcrypt($this->password)
+        ]);
+
+        if ($this->image) {
+            $customFileName = uniqid() . '_.' . $this->image->extension();
+            $this->image->storeAs('public/users', $customFileName);
+            $user->image = $customFileName;
+            $user->save();
+        }
+        $this->resetUI();
+        $this->emit('user-added', 'Usuario Registrado');
+    }
+
+    public function Update()
+    {
+        $rules = [
+            'email' => "required|email|unique:users,email,{$this->selected_id}",
+            'name' => 'required|min:3',
+            'status' => 'required|not_in:Elegir',
+            'profile' => 'required|not_in:Elegir',
+            'password' => 'required|min:3',
+        ];
+        $messages = [
+            'name.required' => 'Ingresa el nombre',
+            'name.min' => 'El nombre debe tener minimo 3 caracteres',
+            'email.required' => 'Ingresa un correo',
+            'email.email' => 'Ingresa un correo válido',
+            'email.unique' => 'Ya existe este correo en el sistema',
+            'status.required' => 'Seleccione un estado para el usuario',
+            'status.not_in' => 'Seleccione un estado diferente a Elegir',
+            'profile.required' => 'Selecciona el perfil/rol del usuario',
+            'profile.not_in' => 'Selecciona un perfil diferente a Elegir',
+            'password.required' => 'Ingresa una contraseña',
+            'password.min' => 'la contraseña debe tener al menos 3 caracteres',
+        ];
+        $this->validate($rules, $messages);
+
+        $user = User::find($this->selected_id);
+        $user->update([
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'status' => $this->status,
+            'profile' => $this->profile,
+            'password' => bcrypt($this->password)
+        ]);
+
+        if ($this->image) {
+            $customFileName = uniqid() . '_.' . $this->image->extension();
+            $this->image->storeAs('public/users', $customFileName);
+            $imageTemp = $user->image;
+            $user->image = $customFileName;
+            $user->save();
+
+            if ($imageTemp != null) {
+                if (file_exists('storage/users/' . $imageTemp))
+                    unlink('storage/users/' . $imageTemp);
+            }
+        }
+        $this->resetUI();
+        $this->emit('user-updated', 'Usuario Actualizado');
+    }
+
+    public function destroy(User $user)
+    {
+        if ($user) {
+            $sales = Sale::where('user_id', $user->id)->count();
+            if ($sales > 0) {
+                $this->emit('user-withsales', 'No es posible eliminar el usuario porque tiene ventas registradas');
+            } else {
+                $user->delete();
+                $this->resetUI();
+                $this->emit('user-deleted', 'Usuario Eliminado');
+            }
+        }
     }
 }
