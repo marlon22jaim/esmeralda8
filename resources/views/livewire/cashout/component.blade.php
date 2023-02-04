@@ -9,7 +9,7 @@
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label>Usuario</label>
-                            <select wire:model="userid">
+                            <select wire:model="userid" class="form-select" style="height: 45.4px">
                                 <option value="0" disabled>Elegir</option>
                                 @foreach ($users as $u)
                                     <option value="{{ $u->id }}">{{ $u->name }}</option>
@@ -61,7 +61,7 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="table-responsive">
                         <table class="table table-bordered mt-1">
-                            <thead class="text-white" style="background: #3b3ff5">
+                            <thead class="text-white" style="background: #3b3f5c">
                                 <tr>
                                     <th class="table-th text-center text-white">Folio</th>
                                     <th class="table-th text-center text-white">total</th>

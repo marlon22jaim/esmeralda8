@@ -5,14 +5,16 @@
                 <h5 class="modal-title text-white">
                     <b>Detalle de Ventas</b>
                 </h5>
-                <button class="close" data-dismiss="modal" type="button" aria-label="Close">
-                    <span class="text-white">&times;</span>
+                <button class="close" onclick="$('#modal-details').modal('hide')" type="button" aria-label="Close"
+                    style="background: #212528">
+                    <span class="text-white"><b>&times;</b></span>
                 </button>
+
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
                     <table class="table table-bordered mt-1">
-                        <thead class="text-white" style="background: #3b3ff5">
+                        <thead class="text-white" style="background: #212528">
                             <tr>
                                 <th class="table-th text-center text-white">Producto</th>
                                 <th class="table-th text-center text-white">Cant</th>

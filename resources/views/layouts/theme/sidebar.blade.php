@@ -49,7 +49,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link {{ request()->is('cashout') ? '' : 'collapsed' }}" href="{{ route('corteCaja') }}">
                 <i class="bi bi-currency-dollar"></i> <span>Arqueos</span>
             </a>
         </li>

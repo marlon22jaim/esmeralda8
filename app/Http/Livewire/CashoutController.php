@@ -26,7 +26,7 @@ class CashoutController extends Component
         session(['title' => 'Córte de Caja']);
 
 
-        return view('livewire.cashout', [
+        return view('livewire.cashout.component', [
             'users' => User::orderBy('name', 'asc')->get()
         ])->extends('layouts.theme.app')
             ->section('content');
@@ -50,8 +50,8 @@ class CashoutController extends Component
 
         $this->details = Sale::join('sale_details as d', 'd.sale_id', 'sales.id')
             ->join('products as p', 'p.id', 'd.product_id')
-            ->select('d.sale_id', 'p.name as prodct', 'd.quantity', 'd.price')
-            ->whereBetween('sales.crated_at', [$fi, $ff])
+            ->select('d.sale_id', 'p.name as product', 'd.quantity', 'd.price')
+            ->whereBetween('sales.created_at', [$fi, $ff])
             ->where('sales.status', 'Paid')
             ->where('sales.user_id', $this->userid)
             ->where('sales.id', $sale->id)
