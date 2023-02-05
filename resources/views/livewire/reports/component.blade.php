@@ -12,7 +12,7 @@
                             <div class="col-sm-12">
                                 <h6>Elige el Usuario</h6>
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select wire:model="userId" class="form-select">
                                         <option value="0">Todos</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -23,7 +23,7 @@
                             <div class="col-sm-12">
                                 <h6>Elige el tipo de Reporte</h6>
                                 <div class="form-group">
-                                    <select class="form-control">
+                                    <select wire:model="reportType" class="form-select">
                                         <option value="0">Ventas del día</option>
                                         <option value="1">Ventas por Fecha</option>
                                     </select>
@@ -88,7 +88,7 @@
                                                 <h6>{{ $d->id }}</h6>
                                             </td>
                                             <td class="text-center">
-                                                <h6>{{ number_format($d->total, 2) }}</h6>
+                                                <h6>$ {{ number_format($d->total, 2) }}</h6>
                                             </td>
                                             <td class="text-center">
                                                 <h6>{{ $d->items }}</h6>
@@ -107,7 +107,7 @@
                                             <td class="text-center" width="50px">
                                                 <button wire:click.prevent="getDetails({{ $d->id }})"
                                                     class="btn btn-dark btn-sm">
-                                                    <i class="bi bi-card-list" aria-hidden="true"></i>
+                                                    <i class="bi bi-card-list"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -126,7 +126,13 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        flatpickr(document.getElementByClassName('flatpickr'), {
+
+        // EVENTOS
+        window.livewire.on('show-modal', Msg => {
+            $('#modalDetails').modal('show')
+        })
+
+        flatpickr(document.getElementsByClassName('flatpickr'), {
             enableTime: false,
             dateFormat: 'Y-m-d',
             locale: {
@@ -176,9 +182,6 @@
             }
         })
 
-        // EVENTOS
-        window.livewire.on('show-modal', Msg => {
-            $(#modalDetails).modal('show')
-        })
+
     })
 </script>

@@ -54,7 +54,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#">
+            <a class="nav-link {{ request()->is('report') ? '' : 'collapsed' }}" href="{{ route('reportes') }}">
                 <i class="bi bi-pie-chart-fill"></i> <span>Reportes</span>
             </a>
         </li>
