@@ -61,6 +61,60 @@
 
                     <div class="col-sm-12 col-md-9">
 
+                        <div class="table-responsive">
+                            <table class="table display table-hover" id="datatable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="color: #3b3f5c">FOLIO</th>
+                                        <th class="text-center" style="color: #3b3f5c">TOTAL</th>
+                                        <th class="text-center" style="color: #3b3f5c">ITEMS</th>
+                                        <th class="text-center" style="color: #3b3f5c">ESTADO</th>
+                                        <th class="text-center" style="color: #3b3f5c">USUARIO</th>
+                                        <th class="text-center" style="color: #3b3f5c">FECHA</th>
+                                        <th class="text-center" style="color: #3b3f5c" width="50px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($data) < 1)
+                                        <tr>
+                                            <td colspan="7">
+                                                <h5>Sin Resultados</h5>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    @foreach ($data as $d)
+                                        <tr>
+                                            <td class="text-center">
+                                                <h6>{{ $d->id }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{ number_format($d->total, 2) }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{ $d->items }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{ $d->status }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>{{ $d->user }}</h6>
+                                            </td>
+                                            <td class="text-center">
+                                                <h6>
+                                                    {{ \Carbon\Carbon::parse($d->created_at)->format('d-m-Y') }}
+                                                </h6>
+                                            </td>
+                                            <td class="text-center" width="50px">
+                                                <button wire:click.prevent="getDetails({{ $d->id }})"
+                                                    class="btn btn-dark btn-sm">
+                                                    <i class="bi bi-card-list" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
