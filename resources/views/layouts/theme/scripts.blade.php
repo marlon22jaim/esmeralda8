@@ -40,4 +40,5 @@
     }
 </script>
 {{-- añadiendo los scripts livewire --}}
+<script src="{{ asset('plugins/flatpickr/flatpickr.js') }}"></script>
 @livewireScripts

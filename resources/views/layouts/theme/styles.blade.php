@@ -61,4 +61,5 @@
     }
 </style>
 {{-- Añadiendo estilos livewire --}}
+<link href="{{ asset('plugins/flatpickr/flatpickr.dark.css') }}" rel="stylesheet" type="text/css" />
 @livewireStyles
