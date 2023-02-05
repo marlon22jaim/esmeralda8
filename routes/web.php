@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\CashoutController;
 use Illuminate\Support\Facades\Route;
@@ -42,3 +43,6 @@ Route::get('asignar', AsignarController::class)->name('asignar');
 Route::get('users', UsersController::class)->name('usuarios');
 Route::get('cashout', CashoutController::class)->name('corteCaja');
 Route::get('report', ReportsController::class)->name('reportes');
+
+Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reportPDF']);
+Route::get('report/pdf/{user}/{type}', [ExportController::class, 'reportPDF']);
