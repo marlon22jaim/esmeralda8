@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\SaleDetails;
@@ -15,15 +15,15 @@ class ExportController extends Controller
     public function reportPDF($userId, $reportType, $dateFrom = null, $dateTo = null)
     {
         $data = [];
-        if ($this->reportType == 0) {
+        if ($reportType == 0) {
             $from = Carbon::parse(Carbon::now())->format('Y-m-d') . ' 00:00:00';
             $to = Carbon::parse(Carbon::now())->format('Y-m-d') . ' 23:59:59';
         } else {
-            $from = Carbon::parse($this->dateFrom)->format('Y-m-d') . ' 00:00:00';
-            $to = Carbon::parse($this->dateTo)->format('Y-m-d') . ' 23:59:59';
+            $from = Carbon::parse($dateFrom)->format('Y-m-d') . ' 00:00:00';
+            $to = Carbon::parse($dateTo)->format('Y-m-d') . ' 23:59:59';
         }
 
-        if ($this->userId == 0) {
+        if ($userId == 0) {
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
                 ->select('sales.*', 'u.name as user')
                 ->whereBetween('sales.created_at', [$from, $to])
@@ -32,13 +32,13 @@ class ExportController extends Controller
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
                 ->select('sales.*', 'u.name as user')
                 ->whereBetween('sales.created_at', [$from, $to])
-                ->where('user_id', $this->userId)
+                ->where('user_id', $userId)
                 ->get();
         }
         $user = $userId == 0 ? 'Todos' : User::find($userId)->name;
         $pdf = PDF::loadView('pdf.reporte', compact('data', 'reportType', 'user', 'dateFrom', 'dateTo'));
 
         return $pdf->stream('salesReport.pdf');
-        // return $pdf->download('salesReport.pdf');
+        //return $pdf->download('salesReport.pdf');
     }
 }
