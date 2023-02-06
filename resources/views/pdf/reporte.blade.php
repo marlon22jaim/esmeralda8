@@ -52,6 +52,62 @@
     </section>
 
 
+    <section style="margin-top: -110px">
+        <table cellpadding="0" cellspacing="0" width="100%" class="table-items">
+            <thead>
+                <tr>
+                    <th width="10%">FOLIO</th>
+                    <th width="12%">IMPORTE</th>
+                    <th width="10%">ITEMS</th>
+                    <th width="12%">ESTADO</th>
+                    <th>USUARIO</th>
+                    <th width="18%">FECHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($data as $item)
+                    <tr>
+                        <td align="center">{{ $item->id }}</td>
+                        <td align="center">{{ number_format($item->total, 2) }}</td>
+                        <td align="center">{{ $item->items }}</td>
+                        <td align="center">{{ $item->status }}</td>
+                        <td align="center">{{ $item->user }}</td>
+                        <td align="center">{{ Carbon::parse($item->created_at)->format('Y-m-d') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-center">
+                        <span><b>TOTALES</b></span>
+                    </td>
+                    <td colspan="1" class="text-center">
+                        <span><strong>${{ number_format($data->sum('total'), 2) }}</strong></span>
+                    </td>
+                    <td class="text-center">
+                        {{ $data->sum('items') }}
+                    </td>
+                    <td colspan="3"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </section>
+
+    <section class="footer">
+        <table cellpadding="0" cellspacing="0" width="100%" class="table-items">
+            <tr>
+                <td width="20%">
+                    <span>La Esmeralda V.1.0</span>
+                </td>
+                <td width="60%" class="text-center">
+                    minimarketlaesmeralda.com
+                </td>
+                <td width="20%" class="text-center">
+                    Página <span class="pagenum"></span>
+                </td>
+            </tr>
+        </table>
+    </section>
 </body>
 
 </html>
