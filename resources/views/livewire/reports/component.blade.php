@@ -32,14 +32,14 @@
                             <div class="col-sm-12 mt-2">
                                 <h6>Fecha desde</h6>
                                 <div class="form-group">
-                                    <input type="text" wire:model="dateFrom" class="form-control flatpickr"
+                                    <input type="date" wire:model="dateFrom" class="form-control flatpickr"
                                         placeholder="Click Para Elegir">
                                 </div>
                             </div>
                             <div class="col-sm-12 mt-2">
                                 <h6>Fecha hasta</h6>
                                 <div class="form-group">
-                                    <input type="text" wire:model="dateTo" class="form-control flatpickr"
+                                    <input type="date" wire:model="dateTo" class="form-control flatpickr"
                                         placeholder="Click Para Elegir">
                                 </div>
                             </div>
