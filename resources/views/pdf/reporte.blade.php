@@ -322,7 +322,7 @@
                         <td align="center">{{ $item->items }}</td>
                         <td align="center">{{ $item->status }}</td>
                         <td align="center">{{ $item->user }}</td>
-                        <td align="center">{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') }}</td>
+                        <td align="center">{{ \Carbon\Carbon::parse($item->created_at)->format('d-M-Y') }}</td>
 
                     </tr>
                 @endforeach
