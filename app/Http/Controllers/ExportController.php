@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SaleExport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Carbon\Carbon;
@@ -40,5 +41,10 @@ class ExportController extends Controller
 
         return $pdf->stream('salesReport.pdf');
         //return $pdf->download('salesReport.pdf');
+    }
+    public function reporteExcel($userId, $reportType, $dateFrom = null, $dateTo = null)
+    {
+        $reportName = 'Reporte de Ventas_' . uniqid() . '.xlsx';
+        return Excel::download(new SaleExport($userId, $reportType, $dateFrom, $dateTo), $reportName);
     }
 }
