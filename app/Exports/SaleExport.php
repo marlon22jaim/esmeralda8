@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class SaleExport implements FromCollection, WithHeadings, Worksheet, WithCustomStartCell, WithTitle, WithStyles
+class SaleExport implements FromCollection, WithHeadings, WithCustomStartCell, WithTitle, WithStyles
 {
 
     protected $userId, $dateFrom, $dateTo, $reportType;
@@ -39,12 +39,12 @@ class SaleExport implements FromCollection, WithHeadings, Worksheet, WithCustomS
         }
         if ($this->userId == 0) {
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
+                ->select('sales.id', 'sales.total', 'sales.items', 'sales.status', 'u.name as user', 'sales.created_at')
                 ->whereBetween('sales.created_at', [$from, $to])
                 ->get();
         } else {
             $data = Sale::join('users as u', 'u.id', 'sales.user_id')
-                ->select('sales.*', 'u.name as user')
+                ->select('sales.id', 'sales.total', 'sales.items', 'sales.status', 'u.name as user', 'sales.created_at')
                 ->whereBetween('sales.created_at', [$from, $to])
                 ->where('user_id', $this->userId)
                 ->get();

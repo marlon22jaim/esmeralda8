@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\SaleExport;
 use App\Http\Controllers\ExportController;
 use App\Http\Livewire\AsignarController;
 use App\Http\Livewire\CashoutController;
@@ -47,4 +48,5 @@ Route::get('report', ReportsController::class)->name('reportes');
 Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reportPDF']);
 Route::get('report/pdf/{user}/{type}', [ExportController::class, 'reportPDF']);
 
-
+Route::get('report/excel/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reporteExcel']);
+Route::get('report/excel/{user}/{type}', [ExportController::class, 'reporteExcel']);
