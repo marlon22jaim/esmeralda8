@@ -15,7 +15,7 @@
                         <div class="input-group">
 
                             <input type="text" wire:model="permissionName" class="form-control"
-                                placeholder='Ej: categoria_index' maxlength="255" />
+                                placeholder='Ej: Categoria_Actualizar' maxlength="255" />
                             <span class="input-group-text input-gp">
                                 <i class="ri ri-edit-box-line"></i>
                             </span>

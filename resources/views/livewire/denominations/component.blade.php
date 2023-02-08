@@ -6,14 +6,17 @@
                     <b>{{ $componentName }} | {{ $pageTitle }}</b>
                 </h4>
                 <ul class="tabs tab-pills">
-                    <li>
-                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
-                            style="background: #3b3f5c">Agregar</a>
-                    </li>
+                    @can('Monedas_Crear')
+                        <li>
+                            <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
+                                style="background: #3b3f5c">Agregar</a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
-            @include('common.searchbox')
-
+            @can('Monedas_Buscar')
+                @include('common.searchbox')
+            @endcan
             <div class="widget-content">
                 <div class="table-responsive">
                     <table class="table display table-hover" id="datatable">
@@ -34,7 +37,7 @@
                                         <h6>{{ $coin->type }}</h6>
 
                                     </td>
-                                    <td  class="text-center">
+                                    <td class="text-center">
                                         <h6>${{ number_format($coin->value, 2) }}</h6>
                                     </td>
                                     <td class="text-center">
@@ -43,15 +46,18 @@
                                                 class="rounded"></span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" wire:click="Edit({{ $coin->id }})"
-                                            class="btn btn-dark mtmobile" title="Edit">
-                                            <i class="ri ri-edit-box-line"></i>
-                                        </a>
-
-                                        <a href="javascript:void(0)" onclick="Confirm('{{ $coin->id }}')"
-                                            class="btn btn-dark" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        @can('Monedas_Actualizar')
+                                            <a href="javascript:void(0)" wire:click="Edit({{ $coin->id }})"
+                                                class="btn btn-dark mtmobile" title="Edit">
+                                                <i class="ri ri-edit-box-line"></i>
+                                            </a>
+                                        @endcan
+                                        @can('Monedas_Eliminar')
+                                            <a href="javascript:void(0)" onclick="Confirm('{{ $coin->id }}')"
+                                                class="btn btn-dark" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        @endcan
 
                                     </td>
                                 </tr>

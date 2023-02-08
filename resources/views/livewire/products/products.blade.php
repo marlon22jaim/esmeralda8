@@ -7,13 +7,16 @@
                 </h4>
                 <ul class="tabs tab-pills">
                     <li>
-                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
-                            style="background: #3b3f5c">Agregar</a>
+                        @can('Producto_Crear')
+                            <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
+                                style="background: #3b3f5c">Agregar</a>
+                        @endcan
                     </li>
                 </ul>
             </div>
-            @include('common.searchbox')
-
+            @can('Producto_Buscar')
+                @include('common.searchbox')
+            @endcan
             <div class="widget-content">
                 <div class="table-responsive">
                     <table class="table display table-hover" id="datatable">
@@ -61,14 +64,18 @@
                                                 class="rounded"></span>
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" wire:click="Edit({{ $product->id }})"
-                                            class="btn btn-dark mtmobile" title="Edit">
-                                            <i class="ri ri-edit-box-line"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" onclick="Confirm('{{ $product->id }}')"
-                                            class="btn btn-dark" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                        @can('Producto_Actualizar')
+                                            <a href="javascript:void(0)" wire:click="Edit({{ $product->id }})"
+                                                class="btn btn-dark mtmobile" title="Edit">
+                                                <i class="ri ri-edit-box-line"></i>
+                                            </a>
+                                        @endcan
+                                        @can('Producto_Eliminar')
+                                            <a href="javascript:void(0)" onclick="Confirm('{{ $product->id }}')"
+                                                class="btn btn-dark" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

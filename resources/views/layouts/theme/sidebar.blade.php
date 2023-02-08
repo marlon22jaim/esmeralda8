@@ -8,16 +8,20 @@
 
 
         <li class="nav-heading">Páginas</li>
-        <li class="nav-item">
-            <a class="nav-link  {{ request()->is('categories') ? '' : 'collapsed' }} " href="{{ route('categorias') }}">
-                <i class="bi bi-bar-chart-steps"></i> <span>Categorias</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('products') ? '' : 'collapsed' }}" href="{{ route('productos') }}">
-                <i class="bi bi-bag-dash"></i> <span>Productos</span>
-            </a>
-        </li>
+        @can('Categoria_Ver')
+            <li class="nav-item">
+                <a class="nav-link  {{ request()->is('categories') ? '' : 'collapsed' }} " href="{{ route('categorias') }}">
+                    <i class="bi bi-bar-chart-steps"></i> <span>Categorias</span>
+                </a>
+            </li>
+        @endcan
+        @can('Producto_Ver')
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('products') ? '' : 'collapsed' }}" href="{{ route('productos') }}">
+                    <i class="bi bi-bag-dash"></i> <span>Productos</span>
+                </a>
+            </li>
+        @endcan
         <li class="nav-item">
             <a class="nav-link {{ request()->is('pos') ? '' : 'collapsed' }}" href="{{ route('ventas') }}">
                 <i class="bi bi-cart3"></i> <span>Ventas</span>
@@ -43,11 +47,13 @@
                 <i class="bi bi-people"></i> <span>Usuarios</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('coins') ? '' : 'collapsed' }}" href="{{ route('coins') }}">
-                <i class="bi bi-coin"></i> <span>Monedas</span>
-            </a>
-        </li>
+        @can('Monedas_Ver')
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('coins') ? '' : 'collapsed' }}" href="{{ route('coins') }}">
+                    <i class="bi bi-coin"></i> <span>Monedas</span>
+                </a>
+            </li>
+        @endcan
         <li class="nav-item">
             <a class="nav-link {{ request()->is('cashout') ? '' : 'collapsed' }}" href="{{ route('corteCaja') }}">
                 <i class="bi bi-currency-dollar"></i> <span>Arqueos</span>

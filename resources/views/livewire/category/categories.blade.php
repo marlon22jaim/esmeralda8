@@ -6,13 +6,17 @@
                     <b>{{ $componentName }} | {{ $pageTitle }}</b>
                 </h4>
                 <ul class="tabs tab-pills">
-                    <li>
-                        <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
-                            style="background: #3b3f5c">Agregar</a>
-                    </li>
+                    @can('Categoria_Crear')
+                        <li>
+                            <a href="javascript:void(0)" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#theModal"
+                                style="background: #3b3f5c">Agregar</a>
+                        </li>
+                    @endcan
                 </ul>
             </div>
-            @include('common.searchbox')
+            @can('Categoria_Buscar')
+                @include('common.searchbox')
+            @endcan
 
             <div class="widget-content">
                 <div class="table-responsive">
@@ -59,20 +63,24 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0)" wire:click="Edit({{ $category->id }})"
-                                            class="btn btn-dark mtmobile" title="Edit">
-                                            <i class="ri ri-edit-box-line"></i>
-                                        </a>
+                                        @can('Categoria_Actualizar')
+                                            <a href="javascript:void(0)" wire:click="Edit({{ $category->id }})"
+                                                class="btn btn-dark mtmobile" title="Edit">
+                                                <i class="ri ri-edit-box-line"></i>
+                                            </a>
+                                        @endcan
                                         {{-- Cantidad de productos que tiene cada categoria
                                         El software no dejará eliminar categorías que tengan productos asociados --}}
 
                                         {{-- @if ($category->products->count() < 1) --}}
-                                        <a href="javascript:void(0)"
-                                            onclick="Confirm('{{ $category->id }}',
+                                        @can('Categoria_Eliminar')
+                                            <a href="javascript:void(0)"
+                                                onclick="Confirm('{{ $category->id }}',
                                         '{{ $category->products->count() }}')"
-                                            class="btn btn-dark" title="Delete">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
+                                                class="btn btn-dark" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        @endcan
                                         {{-- @endif --}}
                                         {{-- {{ $category->imagen }} --}}
                                     </td>
