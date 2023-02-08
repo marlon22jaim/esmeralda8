@@ -34,17 +34,25 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('categories', CategoriesController::class)->name('categorias');
-Route::get('products', ProductsController::class)->name('productos');
-Route::get('coins', CoinsController::class)->name('coins');
-Route::get('pos', PosController::class)->name('ventas');
-Route::get('roles', RolesController::class)->name('roles');
-Route::get('permissions', PermisosController::class)->name('permisos');
-Route::get('asignar', AsignarController::class)->name('asignar');
-Route::get('users', UsersController::class)->name('usuarios');
-Route::get('cashout', CashoutController::class)->name('corteCaja');
-Route::get('report', ReportsController::class)->name('reportes');
+Route::middleware(['auth'])->group(function () {
 
+    Route::get('categories', CategoriesController::class)->name('categorias');
+    Route::get('products', ProductsController::class)->name('productos');
+    Route::get('coins', CoinsController::class)->name('coins');
+    Route::get('pos', PosController::class)->name('ventas');
+
+    Route::group(['middleware' => ['role:Admin']], function () {
+
+        Route::get('roles', RolesController::class)->name('roles');
+        Route::get('permissions', PermisosController::class)->name('permisos');
+        Route::get('asignar', AsignarController::class)->name('asignar');
+        Route::get('users', UsersController::class)->name('usuarios');
+        //
+    });
+
+    Route::get('cashout', CashoutController::class)->name('corteCaja');
+    Route::get('report', ReportsController::class)->name('reportes');
+});
 Route::get('report/pdf/{user}/{type}/{f1}/{f2}', [ExportController::class, 'reportPDF']);
 Route::get('report/pdf/{user}/{type}', [ExportController::class, 'reportPDF']);
 
