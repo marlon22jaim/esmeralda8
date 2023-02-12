@@ -13,6 +13,8 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
+
+
 class PosController extends Component
 {
     public $total, $itemsQuantity, $efectivo, $change;
@@ -216,14 +218,64 @@ class PosController extends Component
             $this->total = Cart::getTotal();
             $this->itemsQuantity = Cart::getTotalQuantity();
             $this->emit('sale-ok', 'Venta Registrada con Éxito');
-            $this->emit('print-ticket', $sale->id);
+            $this->printSaleToThermalPrinter($sale->id); // Imprimir venta con id 1 en una impresora térmica
+
+            // $this->emit('print-ticket', $sale->id);
         } catch (Exception $e) {
             DB::rollback();
             $this->emit('sale-error', $e->getMessage());
         }
     }
-    public function printTicket($sale)
+
+
+    // public function printTicket($sale)
+    // {
+    //     return Redirect::to("print://$sale->id");
+    // }
+
+    public function printSaleToThermalPrinter($saleId)
     {
-        return Redirect::to("print://$sale->id");
+        $saleDetails = DB::select("SELECT p.name AS product, sd.quantity, sd.price 
+                                   FROM sale_details AS sd 
+                                   JOIN products AS p ON p.id = sd.product_id 
+                                   WHERE sd.sale_id = ?", [$saleId]);
+        $sale = DB::select("SELECT s.total, s.items, s.cash, s.change, s.created_at, u.name AS seller 
+                            FROM sales AS s 
+                            JOIN users AS u ON u.id = s.user_id 
+                            WHERE s.id = ?", [$saleId])[0];
+        $company = DB::select("SELECT name, address, taxpayer_id, phone FROM companies")[0];
+
+        $ticket = "<br>";
+        $ticket .= "<br>";
+        $ticket .= "<br>";
+        $ticket .= "<h2 style='text-align-center'>" . $company->name . "</h2>";
+        $ticket .= "<p>" . $company->address . "</p>";
+        $ticket .= "<p>NIT: " . $company->taxpayer_id . "</p>";
+        $ticket .= "<p>TELEFONO: " . $company->phone . "</p>";
+        $ticket .= "<h3>TICKET #" . $saleId . "</h3>";
+        $ticket .= "<p>FECHA: " . $sale->created_at . "</p>";
+        $ticket .= "<p>VENDEDOR: " . $sale->seller . "</p>";
+        $ticket .= "<hr>";
+
+        foreach ($saleDetails as $detail) {
+            $line = "<p>" . $detail->product . " Cant:" . intval($detail->quantity) . " Subt: " . number_format($detail->quantity * $detail->price, 2) . "</p>";
+            $ticket .= $line;
+        }
+
+        $ticket .= "<p><hr></p>";
+        $ticket .= "<p>TOTAL: " . number_format($sale->total, 2) . "</p>";
+        $ticket .= "<p>EFECTIVO: " . number_format($sale->cash, 2) . "</p>";
+        $ticket .= "<p>CAMBIO: " . number_format($sale->change, 2) . "</p>";
+        $ticket .= "<p>!Gracias por su compra</p>";
+        $ticket .= "<p>en nuestro supermercado! </p>";
+        $ticket .= "<p>Esperamos verlo pronto.</p>";
+        $ticket .= "<br>";
+        $ticket .= "<br>";
+        $ticket .= "<br>";
+        $ticket .= "<br>";
+        $ticket .= "<br>";
+
+        // Asigna el valor de $ticket a la propiedad
+        $this->emit('print-ticket2', $ticket);
     }
 }
