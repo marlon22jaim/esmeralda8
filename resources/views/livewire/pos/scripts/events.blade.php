@@ -18,7 +18,6 @@
         window.livewire.on('print-ticket2', Msg => {
             var printWindow = window.open('', '', 'height=400,width=800');
             printWindow.document.write('<html><head>');
-            printWindow.document.write('<style>@page{size:auto;margin:0;}</style>');
             printWindow.document.write('</head><body>');
             printWindow.document.write(Msg);
             printWindow.document.write('</body></html>');

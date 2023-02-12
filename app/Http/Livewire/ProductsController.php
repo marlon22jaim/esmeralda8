@@ -58,6 +58,7 @@ class ProductsController extends Component
     {
         $rules = [
             'name' => 'required|unique:products|min:3',
+            'barcode' => 'required|unique:products',
             'cost' => 'required',
             'price' => 'required',
             'stock' => 'required',
@@ -68,6 +69,7 @@ class ProductsController extends Component
             'name.required' => 'El nombre del producto es requerido',
             'name.unique' => 'Ya existe el nombre del producto',
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'barcode.unique' => 'El código de barras ya está en uso por otro producto',
             'cost.required' => 'El costo es Requerido',
             'price.required' => 'El precio es Requerido',
             'stock.required' => 'El stock es Requerido',
@@ -93,7 +95,11 @@ class ProductsController extends Component
             $this->image->storeAs('public/products', $customFileName);
             $product->image = $customFileName;
             $product->save();
+        } else {
+            $product->image = 'noimg.jpg';
+            $product->save();
         }
+
 
         $this->resetUI();
         $this->emit('product-added', 'Producto Registrado');
@@ -118,6 +124,7 @@ class ProductsController extends Component
     {
         $rules = [
             'name' => "required|min:3|unique:products,name,{$this->selected_id}",
+            'barcode' => "required|unique:products,barcode,{$this->selected_id}",
             'cost' => 'required',
             'price' => 'required',
             'stock' => 'required',
@@ -128,6 +135,7 @@ class ProductsController extends Component
             'name.required' => 'El nombre del producto es requerido',
             'name.unique' => 'Ya existe el nombre del producto',
             'name.min' => 'El nombre del producto debe tener al menos 3 caracteres',
+            'barcode.unique' => 'El código de barras ya está en uso por otro producto',
             'cost.required' => 'El costo es Requerido',
             'price.required' => 'El precio es Requerido',
             'stock.required' => 'El stock es Requerido',

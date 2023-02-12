@@ -51,24 +51,23 @@ class PosController extends Component
         'saveSale' => 'saveSale',
     ];
 
-    public function ScanCode($barcode, $cant = 1)
+    public function ScanCode($barcode)
     {
-        //dd($barcode);
         $product = Product::where('barcode', $barcode)->first();
         if ($product == null || empty($product)) {
             $this->emit('scan-notfound', 'El producto no está registrado');
         } else {
-            if ($this->InCart($product->id)) {
-                $this->increaseQty($product->id);
-                return;
-            }
-            if ($product->stock < 1) {
+            $quantity = $this->getQuantity($product->id);
+            if ($product->stock < $quantity + 1) {
                 $this->emit('no-stock', 'Stock insuficiente!');
                 return;
             }
-            Cart::add($product->id, $product->name, $product->price, $cant, $product->image);
+            if ($quantity > 0) {
+                $this->increaseQty($product->id);
+            } else {
+                Cart::add($product->id, $product->name, $product->price, 1, $product->image);
+            }
             $this->total = Cart::getTotal();
-
             $this->emit('scan-ok', 'Producto Agregado');
         }
     }
@@ -135,6 +134,16 @@ class PosController extends Component
         }
     }
 
+    public function getQuantity($productId)
+    {
+        $exist = Cart::get($productId);
+        if ($exist) {
+            return $exist->quantity;
+        } else {
+            return 0;
+        }
+    }
+
     public function removeItem($productId)
     {
         Cart::remove($productId);
@@ -186,6 +195,10 @@ class PosController extends Component
         DB::beginTransaction();
 
         try {
+            if ($this->itemsQuantity == null) {
+                $this->itemsQuantity = Cart::getTotalQuantity();
+            }
+
             $sale = Sale::create([
                 'total' => $this->total,
                 'items' => $this->itemsQuantity,
@@ -194,6 +207,7 @@ class PosController extends Component
                 'user_id' => Auth()->user()->id
 
             ]);
+
 
             if ($sale) {
                 $items = Cart::getContent();
@@ -245,9 +259,8 @@ class PosController extends Component
                             WHERE s.id = ?", [$saleId])[0];
         $company = DB::select("SELECT name, address, taxpayer_id, phone FROM companies")[0];
 
-        $ticket = "<br>";
-        $ticket .= "<br>";
-        $ticket .= "<br>";
+        $ticket = "<p>--------------------------------</p>";
+        $ticket .= "<p>--------------------------------</p>";
         $ticket .= "<h2 style='text-align-center'>" . $company->name . "</h2>";
         $ticket .= "<p>" . $company->address . "</p>";
         $ticket .= "<p>NIT: " . $company->taxpayer_id . "</p>";
@@ -255,25 +268,24 @@ class PosController extends Component
         $ticket .= "<h3>TICKET #" . $saleId . "</h3>";
         $ticket .= "<p>FECHA: " . $sale->created_at . "</p>";
         $ticket .= "<p>VENDEDOR: " . $sale->seller . "</p>";
-        $ticket .= "<hr>";
+        $ticket .= "<p>--------------------------------</p>";
 
         foreach ($saleDetails as $detail) {
-            $line = "<p>" . $detail->product . " Cant:" . intval($detail->quantity) . " Subt: " . number_format($detail->quantity * $detail->price, 2) . "</p>";
+            $line = "<p>- " . $detail->product . "</p>";
+            $line .= "<p> Cant:" . intval($detail->quantity) . " Subt: " . number_format($detail->quantity * $detail->price, 2) . "</p>";
             $ticket .= $line;
         }
 
-        $ticket .= "<p><hr></p>";
+        $ticket .= "<p>--------------------------------</p>";
         $ticket .= "<p>TOTAL: " . number_format($sale->total, 2) . "</p>";
         $ticket .= "<p>EFECTIVO: " . number_format($sale->cash, 2) . "</p>";
         $ticket .= "<p>CAMBIO: " . number_format($sale->change, 2) . "</p>";
         $ticket .= "<p>!Gracias por su compra</p>";
         $ticket .= "<p>en nuestro supermercado! </p>";
         $ticket .= "<p>Esperamos verlo pronto.</p>";
-        $ticket .= "<br>";
-        $ticket .= "<br>";
-        $ticket .= "<br>";
-        $ticket .= "<br>";
-        $ticket .= "<br>";
+        $ticket .= "<p>--------------------------------</p>";
+        $ticket .= "<p>--------------------------------</p>";
+        
 
         // Asigna el valor de $ticket a la propiedad
         $this->emit('print-ticket2', $ticket);
