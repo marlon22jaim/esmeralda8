@@ -9,6 +9,7 @@ use App\Models\SaleDetails;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Livewire\Component;
 use DB;
+use App\Traits\CartTrait;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class PosController extends Component
 {
+    use CartTrait;
     public $total, $itemsQuantity, $efectivo, $change;
 
     public function mout()
@@ -53,85 +55,21 @@ class PosController extends Component
 
     public function ScanCode($barcode)
     {
-        $product = Product::where('barcode', $barcode)->first();
-        if ($product == null || empty($product)) {
-            $this->emit('scan-notfound', 'El producto no está registrado');
-        } else {
-            $quantity = $this->getQuantity($product->id);
-            if ($product->stock < $quantity + 1) {
-                $this->emit('no-stock', 'Stock insuficiente!');
-                return;
-            }
-            if ($quantity > 0) {
-                $this->increaseQty($product->id);
-            } else {
-                Cart::add($product->id, $product->name, $product->price, 1, $product->image);
-            }
-            $this->total = Cart::getTotal();
-            $this->emit('scan-ok', 'Producto Agregado');
-        }
+        $this->ScanearCode($barcode);
     }
 
-    public function InCart($productId)
-    {
-        $exist = Cart::get($productId);
-        if ($exist) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public function increaseQty($productId, $cant = 1)
     {
-        $title = '';
-        $product = Product::find($productId);
-        $exist = Cart::get($productId);
-        if ($exist)
-            $title = "Cantidad Actualizada";
-        else
-            $title = "Producto Agregado";
-
-
-        if ($exist) {
-            if ($product->stock < ($cant + $exist->quantity)) {
-                $this->emit('no-stock', 'Stock insuficiente :c');
-                return;
-            }
-        }
-
-        Cart::add($product->id, $product->name, $product->price, $cant, $product->image);
-
-        $this->total = Cart::getTotal();
-        $this->itemsQuantity = Cart::getTotalQuantity();
-        $this->emit('scan-ok', $title);
+        $this->IncreaseQuantity($productId, $cant);
     }
 
-    public function updateQty($productId, $cant = 1)
+    public function updateQty(Product $product, $cant = 1)
     {
-        $title = '';
-        $product = Product::find($productId);
-        $exist = Cart::get($productId);
-
-        if ($exist)
-            $title = "Cantidad Actualizada";
-        else
-            $title = "Producto Agregado";
-
-        if ($exist) {
-            if ($product->stock < $cant) {
-                $this->emit('no-stock', 'Stock insuficiente :c');
-                return;
-            }
-        }
-
-        $this->removeItem($productId);
-        if ($cant > 0) {
-            Cart::add($product->id, $product->name, $product->price, $cant, $product->image);
-            $this->total = Cart::getTotal();
-            $this->itemsQuantity = Cart::getTotalQuantity();
-            $this->emit('scan-ok', $title);
-        }
+        if ($cant <= 0) {
+            $this->removeItem($product->id);
+        } else
+            $this->updateQuantity($product, $cant);
     }
 
     public function getQuantity($productId)
@@ -144,37 +82,30 @@ class PosController extends Component
         }
     }
 
-    public function removeItem($productId)
-    {
-        Cart::remove($productId);
-        $this->total = Cart::getTotal();
-        $this->itemsQuantity = Cart::getTotalQuantity();
-        $this->emit('scan-ok', 'Producto eliminado del carrito');
-    }
 
     public function decreaseQty($productId)
     {
-        $item = Cart::get($productId);
-        Cart::remove($productId);
+        $this->decreaseQuantity($productId);
+    }
+    public function AddCash($value)
+    {
+        if ($value > 0)
+            $this->efectivo += $value;
+        else
+            $this->efectivo = $this->total;
+    }
 
-        $newQty = ($item->quantity) - 1;
-        if ($newQty > 0)
-            Cart::add($item->id, $item->name, $item->price, $newQty, $item->attributes[0]);
-
-        $this->total = Cart::getTotal();
-        $this->itemsQuantity = Cart::getTotalQuantity();
-        $this->emit('scan-ok', 'Cantidad Actualizada');
+    public function updateEfectivo($value)
+    {
+        if (is_numeric($value))
+            $this->change = $this->efectivo - $this->total;
+        else
+            $this->change = 0 - $this->total;
     }
 
     public function clearCart()
     {
-        Cart::clear();
-        $this->efectivo = 0;
-        $this->change = 0;
-
-        $this->total = Cart::getTotal();
-        $this->itemsQuantity = Cart::getTotalQuantity();
-        $this->emit('scan-ok', 'Carrito vacío');
+        $this->trashCart();
     }
 
     public function saveSale()
@@ -232,20 +163,12 @@ class PosController extends Component
             $this->total = Cart::getTotal();
             $this->itemsQuantity = Cart::getTotalQuantity();
             $this->emit('sale-ok', 'Venta Registrada con Éxito');
-            $this->printSaleToThermalPrinter($sale->id); // Imprimir venta con id 1 en una impresora térmica
-
-            // $this->emit('print-ticket', $sale->id);
+            $this->printSaleToThermalPrinter($sale->id); // Imprimir venta con id  en una impresora térmica
         } catch (Exception $e) {
             DB::rollback();
             $this->emit('sale-error', $e->getMessage());
         }
     }
-
-
-    // public function printTicket($sale)
-    // {
-    //     return Redirect::to("print://$sale->id");
-    // }
 
     public function printSaleToThermalPrinter($saleId)
     {
@@ -285,7 +208,7 @@ class PosController extends Component
         $ticket .= "<p>Esperamos verlo pronto.</p>";
         $ticket .= "<p>--------------------------------</p>";
         $ticket .= "<p>--------------------------------</p>";
-        
+
 
         // Asigna el valor de $ticket a la propiedad
         $this->emit('print-ticket2', $ticket);
