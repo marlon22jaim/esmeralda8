@@ -25,7 +25,7 @@ class ProductsController extends Component
     public function ScanCode($codigoBarras)
     {
         $this->ScanearCode($codigoBarras);
-        $this->emit('global-msg', 'Se agregó el producto al carrito');
+        
     }
     public function getQuantity($productId)
     {

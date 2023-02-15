@@ -32,6 +32,7 @@ trait CartTrait
                 Cart::add($product->id, $product->name, $product->price, 1, $product->imagen);
             }
             $this->total = Cart::getTotal();
+            $this->emit('global-msg', 'Se agregó el producto al carrito');
             $this->emit('scan-ok', 'Producto Agregado *');
         }
     }

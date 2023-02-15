@@ -44,6 +44,10 @@
             noty(msg)
         })
 
+        window.livewire.on('no-stock', Msg => {
+            noty(Msg, 2)
+        })
+
     })
 </script>
 {{-- añadiendo los scripts livewire --}}
