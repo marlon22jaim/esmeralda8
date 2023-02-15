@@ -128,4 +128,47 @@ trait CartTrait
         $this->itemsQuantity = Cart::getTotalQuantity();
         $this->emit('scan-ok', 'Carrito vacío *');
     }
+    public function printSaleToThermalPrinterTrait($saleId)
+    {
+        $saleDetails = DB::select("SELECT p.name AS product, sd.quantity, sd.price 
+                                   FROM sale_details AS sd 
+                                   JOIN products AS p ON p.id = sd.product_id 
+                                   WHERE sd.sale_id = ?", [$saleId]);
+        $sale = DB::select("SELECT s.total, s.items, s.cash, s.change, s.created_at, u.name AS seller 
+                            FROM sales AS s 
+                            JOIN users AS u ON u.id = s.user_id 
+                            WHERE s.id = ?", [$saleId])[0];
+        $company = DB::select("SELECT name, address, taxpayer_id, phone FROM companies")[0];
+
+        $ticket = "<p>--------------------------------</p>";
+        $ticket .= "<p>--------------------------------</p>";
+        $ticket .= "<h2 style='text-align-center'>" . $company->name . "</h2>";
+        $ticket .= "<p>" . $company->address . "</p>";
+        $ticket .= "<p>NIT: " . $company->taxpayer_id . "</p>";
+        $ticket .= "<p>TELEFONO: " . $company->phone . "</p>";
+        $ticket .= "<h3>TICKET #" . $saleId . "</h3>";
+        $ticket .= "<p>FECHA: " . $sale->created_at . "</p>";
+        $ticket .= "<p>VENDEDOR: " . $sale->seller . "</p>";
+        $ticket .= "<p>--------------------------------</p>";
+
+        foreach ($saleDetails as $detail) {
+            $line = "<p>- " . $detail->product . "</p>";
+            $line .= "<p> Cant:" . intval($detail->quantity) . " Subt: " . number_format($detail->quantity * $detail->price, 2) . "</p>";
+            $ticket .= $line;
+        }
+
+        $ticket .= "<p>--------------------------------</p>";
+        $ticket .= "<p>TOTAL: " . number_format($sale->total, 2) . "</p>";
+        $ticket .= "<p>EFECTIVO: " . number_format($sale->cash, 2) . "</p>";
+        $ticket .= "<p>CAMBIO: " . number_format($sale->change, 2) . "</p>";
+        $ticket .= "<p>!Gracias por su compra</p>";
+        $ticket .= "<p>en nuestro supermercado! </p>";
+        $ticket .= "<p>Esperamos verlo pronto.</p>";
+        $ticket .= "<p>--------------------------------</p>";
+        $ticket .= "<p>--------------------------------</p>";
+
+
+        // Asigna el valor de $ticket a la propiedad
+        $this->emit('print-ticket2', $ticket);
+    }
 }

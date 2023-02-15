@@ -38,6 +38,13 @@
             pos: 'top-right'
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        window.livewire.on('global-msg', msg => {
+            noty(msg)
+        })
+
+    })
 </script>
 {{-- añadiendo los scripts livewire --}}
 <script src="{{ asset('plugins/flatpickr/flatpickr.js') }}"></script>

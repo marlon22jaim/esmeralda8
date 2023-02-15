@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Traits\CartTrait;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -14,9 +16,26 @@ class ProductsController extends Component
 
     use WithFileUploads;
     use WithPagination;
+    use CartTrait;
 
     public $name, $barcode, $cost, $price, $stock, $alerts, $categoryid, $search, $image, $selected_id, $pageTitle, $componentName;
+    public $total, $itemsQuantity, $efectivo, $change;
     private $pagination = 5;
+
+    public function ScanCode($codigoBarras)
+    {
+        $this->ScanearCode($codigoBarras);
+        $this->emit('global-msg', 'Se agregó el producto al carrito');
+    }
+    public function getQuantity($productId)
+    {
+        $exist = Cart::get($productId);
+        if ($exist) {
+            return $exist->quantity;
+        } else {
+            return 0;
+        }
+    }
 
     public function paginationView()
     {
@@ -28,6 +47,8 @@ class ProductsController extends Component
         $this->pageTitle = 'Listado';
         $this->componentName = 'Productos';
         $this->categoryid = 'Elegir';
+        $this->total = Cart::getTotal();
+        $this->itemsQuantity = Cart::getTotalQuantity();
     }
     public function render()
     {

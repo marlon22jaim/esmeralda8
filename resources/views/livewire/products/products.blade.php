@@ -76,6 +76,10 @@
                                                 <i class="bi bi-trash"></i>
                                             </a>
                                         @endcan
+
+                                        <button wire:click.prevent="ScanCode('{{ $product->barcode }}')" class="btn btn-dark">
+                                            <i class="bi bi-cart"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
