@@ -52,4 +52,5 @@
 </script>
 {{-- añadiendo los scripts livewire --}}
 <script src="{{ asset('plugins/flatpickr/flatpickr.js') }}"></script>
+<script src="{{ asset('js/apexcharts.js') }}"></script>
 @livewireScripts

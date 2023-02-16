@@ -30,6 +30,8 @@
 <link href="{{ asset('assets/css/apps/notes.css') }}" rel="stylesheet" />
 
 {{-- end otros --}}
+
+<link href="{{ asset('css/apexcharts.css') }}" rel="stylesheet" />
 <style>
     aside {
         /* display: none !important; */
