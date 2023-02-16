@@ -7,6 +7,7 @@ use App\Http\Livewire\CashoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\CategoriesController;
 use App\Http\Livewire\CoinsController;
+use App\Http\Livewire\Dash;
 use App\Http\Livewire\PermisosController;
 use App\Http\Livewire\PosController;
 use App\Http\Livewire\ProductsController;
@@ -32,7 +33,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', Dash::class)->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
 
