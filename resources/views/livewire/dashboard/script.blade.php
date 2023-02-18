@@ -67,7 +67,10 @@
             dataLabels: {
                 enabled: true,
                 formatter: function(val) {
-                    return '$' + parseFloat(val).toFixed(2)
+                    return val.toLocaleString('es-CO', {
+                        style: 'currency',
+                        currency: 'COP'
+                    });
                 },
                 offsetY: -5,
                 style: {
@@ -115,7 +118,10 @@
             dataLabels: {
                 enabled: true,
                 formatter: function(val) {
-                    return "$" + parseFloat(val).toFixed(2);
+                    return val.toLocaleString('es-CO', {
+                        style: 'currency',
+                        currency: 'COP'
+                    });
                 },
                 offsetY: -20,
                 style: {
@@ -161,7 +167,10 @@
                 labels: {
                     show: false,
                     formatter: function(val) {
-                        return "$" + parseFloat(val).toFixed(2);
+                        return val.toLocaleString('es-CO', {
+                            style: 'currency',
+                            currency: 'COP'
+                        });
                     }
                 }
 
@@ -181,12 +190,16 @@
         chart3.render();
 
         function totalSalesYear() {
-            let total = 0
+            let total = 0;
             @this.salesByMonth_Data.forEach(item => {
-                total += parseFloat(item)
-            })
-            return "Total: $" + total.toFixed(2)
+                total += parseFloat(item);
+            });
+            return total.toLocaleString('es-CO', {
+                style: 'currency',
+                currency: 'COP'
+            });
         }
+
 
 
     })
