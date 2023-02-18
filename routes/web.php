@@ -34,10 +34,9 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', Dash::class)->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-
+    Route::get('/home', Dash::class)->name('dashboard');
     Route::get('categories', CategoriesController::class)->name('categorias');
     Route::get('products', ProductsController::class)->name('productos');
     Route::get('coins', CoinsController::class)->name('coins');
