@@ -34,9 +34,9 @@ class Dash extends Component
             )->whereYear("sale_details.created_at", $this->year)
             ->groupBy('p.name')
             ->orderBy(DB::raw("sum(sale_details.quantity * sale_details.price)"), 'desc')
-            ->get()->take(5)->toArray();
+            ->get()->take(7)->toArray();
 
-        $countDif = (5 - count($this->top5Data));
+        $countDif = (7 - count($this->top5Data));
         if ($countDif > 0) {
             for ($i = 1; $i <= $countDif; $i++) {
                 array_push($this->top5Data, ["product" => '-', "total" => 0]);
