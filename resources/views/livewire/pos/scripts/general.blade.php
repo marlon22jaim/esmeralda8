@@ -7,6 +7,10 @@
             cursorborder: "0px",
             cursorborderradius: 3
         })
+
+        $('#modalSearchProduct').on('shown.bs.modal', function() {
+            $('#modal-search-input').focus()
+        })
     })
 
     function Confirm(id, eventName, text) {

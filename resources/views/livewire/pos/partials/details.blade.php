@@ -6,6 +6,19 @@
     }
 </style>
 
+<div class="connect-sorting mb-2">
+    <div class="btn-group">
+        <button class="btn btn-dark mr-3" style="border-radius: 10px" data-bs-toggle="modal"
+            data-bs-target="#modalSearchProduct">
+            <i class="bi bi-search"> Buscar Productos</i>
+        </button>
+        <button 
+        {{-- wire:click="printLast"  --}}
+        class="btn btn-dark" style="margin-left: 10px;border-radius: 10px">
+            <i class="bi bi-printer-fill"> Imprimir ultima</i>
+        </button>
+    </div>
+</div>
 <div class="connect-sorting">
     <div class="connect-sorting-content">
         <div class="card simple-title-task ui-sortable-handle">
@@ -86,3 +99,10 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function cerrarModal() {
+        $("#modalSearchProduct").modal("hide");
+    }
+</script>
