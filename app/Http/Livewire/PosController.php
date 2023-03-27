@@ -181,4 +181,22 @@ class PosController extends Component
     {
         $this->printSaleToThermalPrinterTrait($saleId);
     }
+
+    public function getLastSaleId()
+    {
+        $lastSale = Sale::orderBy('id', 'desc')->first();
+        if ($lastSale) {
+            return $lastSale->id;
+        } else {
+            return null;
+        }
+    }
+
+    public function printLastSale()
+    {
+        $lastSaleId = $this->getLastSaleId();
+        if ($lastSaleId) {
+            $this->printSaleToThermalPrinter($lastSaleId); // Imprimir última venta en una impresora térmica
+        }
+    }
 }

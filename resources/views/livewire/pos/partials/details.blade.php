@@ -12,11 +12,10 @@
             data-bs-target="#modalSearchProduct">
             <i class="bi bi-search"> Buscar Productos</i>
         </button>
-        <button 
-        {{-- wire:click="printLast"  --}}
-        class="btn btn-dark" style="margin-left: 10px;border-radius: 10px">
+        <button wire:click="printLastSale" class="btn btn-dark" style="margin-left: 10px;border-radius: 10px">
             <i class="bi bi-printer-fill"> Imprimir ultima</i>
         </button>
+
     </div>
 </div>
 <div class="connect-sorting">
