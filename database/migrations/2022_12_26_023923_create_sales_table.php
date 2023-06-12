@@ -17,8 +17,8 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->decimal("total", 10, 2);
             $table->integer("items");
-            $table->decimal("cash", 10, 2);
-            $table->decimal("change", 10, 2);
+            $table->decimal("cash", 10, 2)->default(0.00);
+            $table->decimal("change", 10, 2)->default(0.00);
             $table->enum("status", ["PAID", "PENDING", "CANCELLED"])->default("PAID");
 
             $table->unsignedBigInteger('user_id');
