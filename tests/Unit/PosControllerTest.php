@@ -23,7 +23,6 @@ class PosControllerTest extends TestCase
         // Verificar que las propiedades se han actualizado correctamente
         $this->assertEquals(0, $controller->efectivo);
         $this->assertEquals(0, $controller->change);
-        // Realiza las aserciones adicionales que consideres necesarias
     }
 
     public function testRender()
@@ -36,7 +35,6 @@ class PosControllerTest extends TestCase
 
         // Verificar que la vista se ha generado correctamente
         $this->assertNotEmpty($view);
-        // Realiza las aserciones adicionales que consideres necesarias
     }
 
     public function testSaveSale()
